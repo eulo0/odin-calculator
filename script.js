@@ -13,6 +13,7 @@ var firstNumber = "ERROR";
 var secondNumber = "ERROR";
 var currentOperator = "ERROR";
 var isResult = false; 
+var secondNumberAvailable = false;
 
 function add(x,y){
     return Number(x) + Number(y);
@@ -27,6 +28,12 @@ function multiply(x,y){
 }
 
 function divide(x,y){
+    if (y == 0){
+        firstNumber = "ERROR";
+        secondNumber = "ERROR";
+        currentOperator = "ERROR";
+        return "Can't divide by Zero!"
+    }
     return x / y;
 }
 
@@ -100,9 +107,10 @@ function clearDisplay(){
 }
 
 function appendDisplay(number){
-    if (isResult){
+    if (isResult || secondNumberAvailable){
         display.textContent = "";
         isResult = false;
+        secondNumberAvailable = false;
     }
     if (display.textContent.length < 17){
         display.textContent += number;
@@ -126,7 +134,7 @@ function setOperator(operator){
     if (firstNumber === "ERROR" || currentOperator === "ERROR"){
         currentOperator = operator;
         firstNumber = display.textContent;
-        display.textContent = "";
+        secondNumberAvailable = true;
     }
     else {
         var nextOperator = operator;
