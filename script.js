@@ -9,6 +9,7 @@ const decimal = document.querySelector(".button-decimal");
 const numberKeys = "0123456789";
 const operatorKeys = "/*+-";
 
+var focussedOperator = "ERROR";
 var firstNumber = "ERROR";
 var secondNumber = "ERROR";
 var currentOperator = "ERROR";
@@ -111,6 +112,7 @@ function appendDisplay(number){
         display.textContent = "";
         isResult = false;
         secondNumberAvailable = false;
+        focussedOperator.blur();
     }
     if (display.textContent.length < 17){
         display.textContent += number;
@@ -143,25 +145,33 @@ function setOperator(operator){
         var nextOperator = operator;
         secondNumber = display.textContent;
         var result = operate(firstNumber, secondNumber, currentOperator);
-        display.textContent = result;
+        display.textContent = sanitizeResult(result);
         firstNumber = result; 
         currentOperator = nextOperator;
         secondNumber = "ERROR";
     }
-
-    document.getElementById(operator).focus();
+    focussedOperator = document.getElementById(operator);
+    focussedOperator.focus();
 }
 
 function evaluate(){
-    if (secondNumber === "ERROR" || display.textContent !== ""){
+    if (display.textContent !== ""){
         secondNumber = display.textContent;
     }
-    if (firstNumber !== "ERROR" || secondNumber !== "ERROR" || currentOperator !== "ERROR"){
+    if (firstNumber !== "ERROR" && secondNumber !== "ERROR" && currentOperator !== "ERROR"){
         var result = operate(firstNumber, secondNumber, currentOperator);
-        display.textContent = result;
+        display.textContent = sanitizeResult(result);
         firstNumber = result;
         secondNumber = "ERROR";
         currentOperator = "ERROR";
     }
 }
 
+function sanitizeResult(result){
+    if (Number.isFinite(result)){
+        return Math.round(result * 10000000000) / 10000000000
+    }
+    else if (result === "Can't divide by Zero!"){
+        return result;
+    }
+}
