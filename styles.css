@@ -1,3 +1,11 @@
+.title {
+    display: flex;
+    font-size: 108px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     display: flex;
     align-items: center; 
@@ -20,6 +28,7 @@
     padding: 15px;
     font-weight: 500;
     border: solid 7px black;
+    flex-shrink: 0;
 }
 
 .clear-container {
@@ -35,7 +44,7 @@
     display: flex;
     height: 700px;
     width: 800px;
-    margin: 30px auto;
+    margin: 15px auto;
     align-content: flex-start;
     flex-wrap: wrap;
     justify-content: center;

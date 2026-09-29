@@ -20,8 +20,9 @@ var isResult = false;                   // flag for displaying results
 var secondNumberAvailable = false;      // flag for user to start typing second number 
 var secondNumberTyped = false;          // flag that sees if the second number is already typed 
 
+// Basic math functions 
 function add(x,y){
-    return Number(x) + Number(y);
+    return Number(x) + Number(y);       // converted to a number first otherwise it would be concatenated as a string
 }
 
 function subtract(x,y){
@@ -102,16 +103,17 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-// Helper Functions 
+// Button logic functions 
 
-function clearDisplay(){
+function clearDisplay(){         
     firstNumber = "";
     secondNumber = "";
-    currentOperator = "";
-    isResult = false;
+    currentOperator = "";  
+    isResult = false;                   
+    secondNumberAvailable = false;      
+    secondNumberTyped = false;           
     display.textContent = "";
-    secondNumberTyped = false;
-    secondNumberAvailable = false;
+
 }
 
 function appendDisplay(number){
@@ -143,6 +145,7 @@ function addDecimalToDisplay(){
     }
 }
 
+// for any operator being pressed 
 function setOperator(operator){
     // sets firstNumber and currentOperator when they're not set yet
     if (firstNumber === "" || currentOperator === ""){
@@ -171,13 +174,14 @@ function setOperator(operator){
     focussedOperator.focus();
 }
 
+// used whenever = is called 
 function evaluate(){
     // sets the second number if not already set
     if (display.textContent !== "" && secondNumberTyped){
         secondNumber = display.textContent;
         secondNumberTyped = false;
     }
-    // only runs evaluage whenever all three variables are numbers 
+    // only runs evaluage whenever all three variables have proper values
     if (firstNumber !== "" && secondNumber !== "" && currentOperator !== ""){
         var result = operate(firstNumber, secondNumber, currentOperator);
         display.textContent = sanitizeResult(result);
@@ -188,12 +192,14 @@ function evaluate(){
     }
 }
 
+// Helper Function
 function sanitizeResult(result){
     // rounds to the 0.0000000001th digit
     if (Number.isFinite(result)){
         return Math.round(result * 10000000000) / 10000000000
     }
-    // just returns the result if its the divide by zero message
+    // just returns the result if its the divide by zero message. here, display.textContent isn't just set to the
+    // message because it would be wiped after sanitizeResult() is called in evaluate()
     else if (result === divideZeroMsg){
         return result;
     }
