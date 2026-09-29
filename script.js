@@ -136,7 +136,10 @@ function setOperator(operator){
         firstNumber = display.textContent;
         secondNumberAvailable = true;
     }
-    else {
+    else if (isResult || secondNumberAvailable){
+        currentOperator = operator
+    }
+    else{
         var nextOperator = operator;
         secondNumber = display.textContent;
         var result = operate(firstNumber, secondNumber, currentOperator);
@@ -145,6 +148,7 @@ function setOperator(operator){
         currentOperator = nextOperator;
         secondNumber = "ERROR";
     }
+
     document.getElementById(operator).focus();
 }
 
