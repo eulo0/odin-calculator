@@ -140,7 +140,7 @@ function eraseDisplay(){
 }
 
 function addDecimalToDisplay(){
-    if (!display.textContent.includes("." && display.textContent !== divideZeroMsg)){
+    if (!display.textContent.includes(".") && display.textContent !== divideZeroMsg && !isResult){
         display.textContent += ".";
     }
 }
